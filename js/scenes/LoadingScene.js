@@ -105,7 +105,7 @@ let LoadingScene = new Phaser.Class({
     },
     create: function () {
         loadSoundEffects(this);
-        this.scene.start('MainMenu');
-        //this.scene.start('LevelOne')
+        //this.scene.start('MainMenu');
+        this.scene.start('LevelOne')
     }
 });
