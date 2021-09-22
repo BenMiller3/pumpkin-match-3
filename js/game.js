@@ -10,7 +10,7 @@ const config = {
             debug: false
         }
     },
-    scene: [LoadingScene, LevelOne, MainMenu, HUD]
+    scene: [LoadingScene, LevelOne, MainMenu, HUD, GameOver, Credits]
 };
 
 const gameConfig = {

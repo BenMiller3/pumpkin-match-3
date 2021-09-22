@@ -2,17 +2,16 @@
 // let collectCoinSoundEffect;
 
 function loadSoundEffects(game) {
-    /*
-    collectCoinSoundEffect = game.sound.add('collectCoin');
-    collectCoinSoundEffect.allowMultiple = true;
-    footstepSoundEffect = game.sound.add('footstep', {
+    matchSound = game.sound.add('matchSound');
+    matchSound.allowMultiple = true;
+    mainMusic = game.sound.add('halloweenMusic', {
         loop: true
     })
-     */
 }
 
 function loadAudio(game) {
-    //game.load.audio('collectCoin', ['assets/audio/soundEffects/collectCoin.wav']);
+    game.load.audio('halloweenMusic', ['assets/audio/music/halloweenMusic.wav']);
+    game.load.audio('matchSound', ['assets/audio/soundEffects/match.wav']);
 }
 
 function loadMusic(game) {
@@ -105,7 +104,6 @@ let LoadingScene = new Phaser.Class({
     },
     create: function () {
         loadSoundEffects(this);
-        //this.scene.start('MainMenu');
-        this.scene.start('LevelOne')
+        this.scene.start('MainMenu')
     }
 });

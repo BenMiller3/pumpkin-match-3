@@ -23,6 +23,7 @@ let MainMenu = new Phaser.Class({
         this.scene.setVisible(false, 'HUD');
         this.load.image('glass-panel', 'assets/glassPanel.png')
         this.load.image('cursor-hand', 'assets/cursor_hand.png')
+        mainMusic.play()
     },
     create: function() {
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
@@ -40,6 +41,7 @@ let MainMenu = new Phaser.Class({
             menuMusic.play();
         }
          */
+        theGame = this;
         const { width, height } = this.scale
 
         let titleTextStyle = {fontFamily: 'font1', fill: "#FFFFFF", fontSize: '88px'}
@@ -50,22 +52,25 @@ let MainMenu = new Phaser.Class({
         const playButton = this.add.image(width * 0.5, height * 0.6, 'glass-panel')
             .setDisplaySize(450, 50)
 
+        playButton.setInteractive(new Phaser.Geom.Rectangle(0, 0, playButton.width, playButton.height), Phaser.Geom.Rectangle.Contains);
+        playButton.on('pointerdown', function () {
+            restartGame(theGame)
+        })
+
         this.add.text(playButton.x, playButton.y, 'Play', buttonTextStyle)
             .setOrigin(0.5)
 
-        // Settings button
-        const settingsButton = this.add.image(playButton.x, playButton.y + playButton.displayHeight + 10, 'glass-panel')
-            .setDisplaySize(450, 50)
-
-        this.add.text(settingsButton.x, settingsButton.y, 'Settings', buttonTextStyle)
-            .setOrigin(0.5)
-
         // Credits button
-        const creditsButton = this.add.image(settingsButton.x, settingsButton.y + settingsButton.displayHeight + 10, 'glass-panel')
+        const creditsButton = this.add.image(playButton.x, playButton.y + playButton.displayHeight + 10, 'glass-panel')
             .setDisplaySize(450, 50)
 
         this.add.text(creditsButton.x, creditsButton.y, 'Credits', buttonTextStyle)
             .setOrigin(0.5)
+
+        creditsButton.setInteractive(new Phaser.Geom.Rectangle(0, 0, creditsButton.width, creditsButton.height), Phaser.Geom.Rectangle.Contains);
+        creditsButton.on('pointerdown', function () {
+            openCredits(theGame)
+        })
 
         const quitButton = this.add.image(creditsButton.x, creditsButton.y + creditsButton.displayHeight + 10, 'glass-panel')
             .setDisplaySize(450, 50)
@@ -73,9 +78,13 @@ let MainMenu = new Phaser.Class({
         this.add.text(quitButton.x, quitButton.y, 'Exit', buttonTextStyle)
             .setOrigin(0.5)
 
+        quitButton.setInteractive(new Phaser.Geom.Rectangle(0, 0, quitButton.width, quitButton.height), Phaser.Geom.Rectangle.Contains);
+        quitButton.on('pointerdown', function () {
+            window.close();
+        })
+
 
         this.buttons.push(playButton);
-        this.buttons.push(settingsButton);
         this.buttons.push(creditsButton);
         this.buttons.push(quitButton);
 
@@ -151,12 +160,9 @@ let MainMenu = new Phaser.Class({
             this.scene.start('LevelOne')
         }
         else if (this.selectedButtonIndex == 1) {
-            openSettings(this);
+            this.scene.start('Credits')
         }
         else if (this.selectedButtonIndex == 2) {
-            openCredits(this);
-        }
-        else if (this.selectedButtonIndex == 3) {
             window.close();
         }
     }
